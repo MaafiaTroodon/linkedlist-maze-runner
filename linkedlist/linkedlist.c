@@ -240,22 +240,25 @@ extern int ll_add(ll_iterator_t iter, void *item) {
 
     new_node->item = item;
     new_node->next = iter_struct->current;
-    new_node->prev = iter_struct->current ? iter_struct->current->prev : NULL;
 
-    if (new_node->prev) {
-        new_node->prev->next = new_node;
+    // If the iterator is at the beginning, insert at the head
+    if (iter_struct->current == iter_struct->list->head || iter_struct->current == NULL) {
+        new_node->prev = NULL;
+        iter_struct->list->head = new_node;
     } else {
-        iter_struct->list->head = new_node; // If inserting at the beginning
+        new_node->prev = iter_struct->current->prev;
+        iter_struct->current->prev->next = new_node;
     }
 
     if (iter_struct->current) {
         iter_struct->current->prev = new_node;
     } else {
-        iter_struct->list->tail = new_node; // If inserting at the end
+        iter_struct->list->tail = new_node;
     }
 
     return 1;
 }
+
 
 
 // Set the value of the last returned element
