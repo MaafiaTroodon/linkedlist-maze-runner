@@ -195,20 +195,27 @@ extern int ll_has_next(ll_iterator_t iter) {
     return iter_struct->current != NULL;
 }
 
-// Get the next element and advance the iterator
 extern void *ll_next(ll_iterator_t iter) {
     assert(iter);
     ll_iterator *iter_struct = (ll_iterator *)iter;
 
-    if (!iter_struct->current) return NULL;
+    // If we haven't started yet, move to the first element
+    if (iter_struct->current == NULL) {
+        iter_struct->current = iter_struct->list->head;
+    }
+    else {
+        iter_struct->current = iter_struct->current->next;
+    }
+
+    // If we reach the end, return NULL
+    if (!iter_struct->current) {
+        return NULL;
+    }
 
     iter_struct->last_returned = iter_struct->current;
-    iter_struct->current = iter_struct->current->next;
-
-    printf("Next: %s\n", (char *)iter_struct->last_returned->item);
-
-    return iter_struct->last_returned->item;
+    return iter_struct->current->item;
 }
+
 
 
 // Add an item before the current position of the iterator
@@ -248,27 +255,40 @@ extern void *ll_remove(ll_iterator_t iter) {
     assert(iter);
     ll_iterator *iter_struct = (ll_iterator *)iter;
 
-    if (!iter_struct->last_returned) return NULL;  // Prevent removal if `ll_next()` wasn't called
+    if (!iter_struct->last_returned) {
+        return NULL; // Prevents removing without calling next
+    }
 
     ll_node_t *node = iter_struct->last_returned;
     void *item = node->item;
 
+    // Move iterator forward if possible, otherwise move it back
+    if (iter_struct->current == node) {
+        iter_struct->current = node->next;
+    }
+
+    // Properly update linked list pointers
     if (node->prev) {
         node->prev->next = node->next;
     } else {
-        iter_struct->list->head = node->next;
+        iter_struct->list->head = node->next; // Update head if removing first node
     }
 
     if (node->next) {
         node->next->prev = node->prev;
     } else {
-        iter_struct->list->tail = node->prev;
+        iter_struct->list->tail = node->prev; // Update tail if removing last node
     }
 
+    iter_struct->last_returned = NULL; // Reset last_returned after removal
     free(node);
-    iter_struct->last_returned = NULL;
-
-    printf("Removed: '%s'\n", (char *)item);
 
     return item;
 }
+
+
+
+
+
+
+
