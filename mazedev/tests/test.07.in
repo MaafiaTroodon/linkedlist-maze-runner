@@ -1,0 +1,25 @@
+Alpha
+Bravo
+Charlie
+Delta
+END
+Alpha Bravo
+Alpha Charlie
+Alpha Delta
+Bravo Alpha
+Bravo Charlie
+Bravo Delta
+Charlie Alpha
+Charlie Bravo
+Charlie Delta
+Delta Alpha
+Delta Bravo
+Delta Charlie
+END
+Alpha
+Charlie
+Delta
+Bravo
+Alpha
+Bravo
+END

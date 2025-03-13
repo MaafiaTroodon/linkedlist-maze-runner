@@ -1,0 +1,533 @@
+# use the official gcc image, based on debian
+# can use verions as well, like gcc:5.2
+# see https://hub.docker.com/_/gcc/
+image: gcc
+
+build:
+  tags:
+    - ugrad
+  stage: build
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - if [ -f CMakeLists.txt ]; then cmake CMakeLists.txt; fi
+    - make
+    - cd ..
+    - cd mazedev
+    - if [ -f CMakeLists.txt ]; then cmake CMakeLists.txt; fi
+    - make
+  artifacts:
+    paths:
+      - linkedlist/linkedlist
+      - mazedev/mazedev
+
+test00:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 00 . linkedlist
+
+test01:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 01 . linkedlist
+
+test02:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 02 . linkedlist
+
+test03:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 03 . linkedlist
+
+test04:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 04 . linkedlist
+
+test05:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 05 . linkedlist
+
+test06:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 06 . linkedlist
+
+test07:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 07 . linkedlist
+
+test08:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 08 . linkedlist
+
+test09:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 09 . linkedlist
+
+test10:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 00 . mazedev
+
+test11:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 01 . mazedev
+
+test12:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 02 . mazedev
+
+test13:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 03 . mazedev
+
+test14:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 04 . mazedev
+
+test15:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 05 . mazedev
+
+test16:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 06 . mazedev
+
+test17:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 07 . mazedev
+
+test18:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 08 . mazedev
+
+test19:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 09 . mazedev
+
+test20:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 10 . mazedev
+
+test21:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 11 . mazedev
+# use the official gcc image, based on debian
+# can use verions as well, like gcc:5.2
+# see https://hub.docker.com/_/gcc/
+image: gcc
+
+build:
+  tags:
+    - ugrad
+  stage: build
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - if [ -f CMakeLists.txt ]; then cmake CMakeLists.txt; fi
+    - make
+    - cd ..
+    - cd mazedev
+    - if [ -f CMakeLists.txt ]; then cmake CMakeLists.txt; fi
+    - make
+  artifacts:
+    paths:
+      - linkedlist/linkedlist
+      - mazedev/mazedev
+
+test00:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 00 . linkedlist
+
+test01:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 01 . linkedlist
+
+test02:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 02 . linkedlist
+
+test03:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 03 . linkedlist
+
+test04:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 04 . linkedlist
+
+test05:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 05 . linkedlist
+
+test06:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 06 . linkedlist
+
+test07:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 07 . linkedlist
+
+test08:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 08 . linkedlist
+
+test09:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd linkedlist
+    - ./tests/test.sh 09 . linkedlist
+
+test10:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 00 . mazedev
+
+test11:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 01 . mazedev
+
+test12:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 02 . mazedev
+
+test13:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 03 . mazedev
+
+test14:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 04 . mazedev
+
+test15:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 05 . mazedev
+
+test16:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 06 . mazedev
+
+test17:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 07 . mazedev
+
+test18:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 08 . mazedev
+
+test19:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 09 . mazedev
+
+test20:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 10 . mazedev
+
+test21:
+  tags:
+    - ugrad
+  stage: test
+  except:
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /release-NOBUILD/
+  script:
+    - cd mazedev
+    - ./tests/test.sh 11 . mazedev
+

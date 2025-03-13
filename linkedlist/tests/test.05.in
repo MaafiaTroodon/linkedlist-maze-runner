@@ -1,0 +1,8 @@
+new
+append alpha
+append beta
+append gamma
+iterator
+next
+add delta
+end

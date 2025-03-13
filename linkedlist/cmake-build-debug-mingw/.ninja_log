@@ -1,0 +1,10 @@
+# ninja log v5
+11	135	7636078700544390	CMakeFiles/linkedlist.dir/main.c.obj	567b88703b7ac8be
+1	154	7636081353895456	CMakeFiles/linkedlist.dir/linkedlist.c.obj	86d8dde5cddf568a
+155	300	7636081355313279	linkedlist.exe	f715d2137e0320c7
+1	92	7636081505137046	CMakeFiles/linkedlist.dir/linkedlist.c.obj	86d8dde5cddf568a
+93	194	7636081506124407	linkedlist.exe	f715d2137e0320c7
+1	125	7636089692248711	CMakeFiles/linkedlist.dir/linkedlist.c.obj	86d8dde5cddf568a
+126	244	7636089693372945	linkedlist.exe	f715d2137e0320c7
+2	104	7636090945746762	CMakeFiles/linkedlist.dir/linkedlist.c.obj	86d8dde5cddf568a
+105	212	7636090946779793	linkedlist.exe	f715d2137e0320c7

@@ -1,0 +1,7 @@
+new
+append alpha
+append beta
+append gamma
+iterator
+hasnext
+end

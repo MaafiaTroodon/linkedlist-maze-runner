@@ -1,0 +1,16 @@
+new
+append alpha
+append beta
+append gamma
+append delta
+iterator
+hasnext
+next
+add epsilon
+next 
+set eta
+next 
+remove
+next
+hasnext
+end

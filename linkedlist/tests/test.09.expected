@@ -1,0 +1,24 @@
+[ ]
+[ alpha ]
+[ alpha beta ]
+[ alpha beta gamma ]
+[ alpha beta gamma delta ]
+[ alpha beta gamma delta ]
+Has next
+[ alpha beta gamma delta ]
+Next: alpha
+[ alpha beta gamma delta ]
+Added: 'epsilon'
+[ alpha epsilon beta gamma delta ]
+Next: beta
+[ alpha epsilon beta gamma delta ]
+Set: 'beta' -> 'eta'
+[ alpha epsilon eta gamma delta ]
+Next: gamma
+[ alpha epsilon eta gamma delta ]
+Removed: 'gamma'
+[ alpha epsilon eta delta ]
+Next: delta
+[ alpha epsilon eta delta ]
+No next
+[ alpha epsilon eta delta ]

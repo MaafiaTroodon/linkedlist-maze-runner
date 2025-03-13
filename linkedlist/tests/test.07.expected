@@ -1,0 +1,15 @@
+[ ]
+[ alpha ]
+[ alpha beta ]
+[ alpha beta gamma ]
+[ alpha beta gamma ]
+Next: alpha
+[ alpha beta gamma ]
+Next: beta
+[ alpha beta gamma ]
+Removed: 'beta'
+[ alpha gamma ]
+Next: gamma
+[ alpha gamma ]
+Removed: 'gamma'
+[ alpha ]
