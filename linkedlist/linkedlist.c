@@ -173,14 +173,17 @@ extern int ll_is_empty(linked_list_t ll) {
 // Create a new iterator for the list
 extern ll_iterator_t ll_iterator_new(linked_list_t list) {
     assert(list);
-    linked_list *actual_list = (linked_list *)list; // Fix void* cast
+    linked_list *actual_list = (linked_list *)list;
     ll_iterator *iter = (ll_iterator *)malloc(sizeof(ll_iterator));
     if (!iter) return NULL;
-    iter->current = actual_list->head;
+
+    iter->current = NULL;  // Start BEFORE the first element
     iter->last_returned = NULL;
-    iter->list = actual_list; // Ensure correct type
+    iter->list = actual_list;
+
     return (ll_iterator_t)iter;
 }
+
 
 // Destroy the iterator
 extern void ll_iterator_destroy(ll_iterator_t iter) {
@@ -192,8 +195,16 @@ extern void ll_iterator_destroy(ll_iterator_t iter) {
 extern int ll_has_next(ll_iterator_t iter) {
     assert(iter);
     ll_iterator *iter_struct = (ll_iterator *)iter;
-    return iter_struct->current != NULL;
+
+    // If iterator hasn't started yet, check if head exists
+    if (iter_struct->current == NULL) {
+        return iter_struct->list->head != NULL;
+    }
+
+    // Otherwise, check if there's a next node
+    return iter_struct->current->next != NULL;
 }
+
 
 extern void *ll_next(ll_iterator_t iter) {
     assert(iter);
@@ -202,19 +213,19 @@ extern void *ll_next(ll_iterator_t iter) {
     // If we haven't started yet, move to the first element
     if (iter_struct->current == NULL) {
         iter_struct->current = iter_struct->list->head;
-    }
-    else {
+    } else {
         iter_struct->current = iter_struct->current->next;
     }
 
-    // If we reach the end, return NULL
+    // If no more elements, return NULL (Main.c will print "Next failed")
     if (!iter_struct->current) {
         return NULL;
     }
 
-    iter_struct->last_returned = iter_struct->current;
+    iter_struct->last_returned = iter_struct->current; // Save last node
     return iter_struct->current->item;
 }
+
 
 
 
@@ -256,13 +267,13 @@ extern void *ll_remove(ll_iterator_t iter) {
     ll_iterator *iter_struct = (ll_iterator *)iter;
 
     if (!iter_struct->last_returned) {
-        return NULL; // Prevents removing without calling next
+        return NULL; // Prevents removing without calling next()
     }
 
     ll_node_t *node = iter_struct->last_returned;
     void *item = node->item;
 
-    // Move iterator forward if possible, otherwise move it back
+    // Move iterator forward if it was on the node being removed
     if (iter_struct->current == node) {
         iter_struct->current = node->next;
     }
@@ -285,6 +296,7 @@ extern void *ll_remove(ll_iterator_t iter) {
 
     return item;
 }
+
 
 
 
