@@ -2,17 +2,10 @@
 <project version="4">
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="csci2122">
+      <paths name="csci2122 (cfbed762-83ad-4dda-ba7d-20a79420e55d)">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="csci2122 (0f1cc879-9932-4df2-bced-aa306e087441)">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/tmp/tmp.cMJPkF4nh5" local="$PROJECT_DIR$" />
+            <mapping deploy="/tmp/tmp.LxM0ckXkDQ" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

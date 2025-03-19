@@ -2,18 +2,14 @@
 <project version="4">
   <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
-      <paths name="csci2122">
+      <paths name="csci2122 (cfbed762-83ad-4dda-ba7d-20a79420e55d)">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/tmp/tmp.maQ0m5GvTg" local="$PROJECT_DIR$/mazedev" />
           </mappings>
-        </serverdata>
-      </paths>
-      <paths name="csci2122 (0f1cc879-9932-4df2-bced-aa306e087441)">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/mazedev/cmake-build-debug" />
+          </excludedPaths>
         </serverdata>
       </paths>
     </serverData>

@@ -170,183 +170,155 @@ extern int ll_is_empty(linked_list_t ll) {
  * Your code below 
  ************************************************************************/
 
-// Create a new iterator for the list
+// Create a new iterator for linked list
 extern ll_iterator_t ll_iterator_new(linked_list_t list) {
     assert(list);
     linked_list *actual_list = (linked_list *)list;
-    ll_iterator *iter = (ll_iterator *)malloc(sizeof(ll_iterator));
-    if (!iter) return NULL;
 
-    iter->current = NULL;  // Start BEFORE the first element
-    iter->last_returned = NULL;
-    iter->list = actual_list;
+    // Allocate memory for iterator
+    ll_iterator *iter = (ll_iterator *)malloc(sizeof(ll_iterator));
+    if (!iter) return NULL; // Return NULL if memory allocation fails
+
+    iter->current = NULL;  // Start iterator before first element
+    iter->last_returned = NULL; // No element has been returned yet
+    iter->list = actual_list; // Associate iterator with list
 
     return (ll_iterator_t)iter;
 }
 
-
-// Destroy the iterator
+// Destroy the iterator and free allocated memory
 extern void ll_iterator_destroy(ll_iterator_t iter) {
     assert(iter);
     free((ll_iterator *)iter);
 }
 
-// Check if there is a next element
+// Check if there is a next element available in list
 extern int ll_has_next(ll_iterator_t iter) {
     assert(iter);
     ll_iterator *it = (ll_iterator *)iter;
 
-    // If current is NULL, check if the list is not empty
+    // If current is NULL, check if list has elements
     if (it->current == NULL) {
         return it->list->head != NULL;
     }
 
-    // Otherwise, check if there's a next element
+    // Otherwise, check if current node has a next node
     return it->current->next != NULL;
 }
 
-
-
-
-
+// Retrieve the next element in list
 extern void *ll_next(ll_iterator_t iter) {
     assert(iter);
     ll_iterator *it = (ll_iterator *)iter;
 
-    // If `current` is NULL (likely after removal), reset to head
+    // If `current` is NULL (possibly due to removal), move to head
     if (it->current == NULL) {
-        it->current = it->list->head;
+        if (it->list->head != NULL) {
+            it->current = it->list->head;  // Start from head
+        } else {
+            return NULL;  // List is empty
+        }
     } else {
-        it->current = it->current->next;
+        // Move to next node
+        if (it->current->next != NULL) {
+            it->current = it->current->next;
+        } else {
+            return NULL;  // End of list reached
+        }
     }
 
-    // If no next element exists, return NULL
-    if (it->current == NULL) {
-        return NULL;
-    }
-
-    it->last_returned = it->current;
-    return it->current->item;
+    it->last_returned = it->current; // Store last returned node
+    return it->current->item; // Return item stored in the node
 }
 
-
-
-
-
-
-
-// Add an item before the current position of the iterator
+// Add an item before current position of iterator
 extern int ll_add(ll_iterator_t iter, void *item) {
     assert(iter);
-    ll_iterator *iter_struct = (ll_iterator *)iter;
+    ll_iterator *it = (ll_iterator *)iter;
 
+    // Allocate memory for new node
     ll_node_t *new_node = (ll_node_t *)malloc(sizeof(ll_node_t));
-    if (!new_node) return 0;
+    if (!new_node) return 0; // Return failure if allocation fails
     new_node->item = item;
 
-    // Case 1: Adding to an empty list
-    if (iter_struct->list->head == NULL) {
+    // Case 1: If iterator hasn't moved yet, insert at head
+    if (it->current == NULL || it->current == it->list->head) {
+        new_node->next = it->list->head;
         new_node->prev = NULL;
-        new_node->next = NULL;
-        iter_struct->list->head = iter_struct->list->tail = new_node;
-        iter_struct->current = new_node;  // Move iterator to the new node
-    }
-        // Case 2: If iterator has not moved yet, insert at the start
-    else if (iter_struct->current == NULL || iter_struct->current == iter_struct->list->head) {
-        new_node->prev = NULL;
-        new_node->next = iter_struct->list->head;
-        iter_struct->list->head->prev = new_node;
-        iter_struct->list->head = new_node;
-    }
-        // Case 3: Insert before `current`
-    else {
-        new_node->prev = iter_struct->current->prev;
-        new_node->next = iter_struct->current;
 
-        if (iter_struct->current->prev) {
-            iter_struct->current->prev->next = new_node;
+        if (it->list->head) {
+            it->list->head->prev = new_node;
         } else {
-            iter_struct->list->head = new_node;
+            it->list->tail = new_node; // If list was empty
         }
 
-        iter_struct->current->prev = new_node;
+        it->list->head = new_node;
+    } else {
+        // Case 2: Insert before `current`
+        new_node->prev = it->current->prev;
+        new_node->next = it->current;
+
+        if (it->current->prev) {
+            it->current->prev->next = new_node;
+        } else {
+            it->list->head = new_node;
+        }
+
+        it->current->prev = new_node;
     }
 
-
-    iter_struct->current = new_node->next;
-
-    return 1;
+    return 1; // Successfully added
 }
 
-
-
-
-
-
-// Set the value of the last returned element
+// Set the value of last returned element
 extern void *ll_set(ll_iterator_t iter, void *item) {
     assert(iter);
     ll_iterator *it = (ll_iterator *)iter;
 
-    if (!it->last_returned) return NULL; // Must have called `next()` before setting
+    // Ensure `next()` was called before setting a value
+    if (!it->last_returned) return NULL;
 
-    void *old_item = it->last_returned->item;
-    it->last_returned->item = item;
-    return old_item;
+    void *old_item = it->last_returned->item; // Store old item
+    it->last_returned->item = item; // Replace with new item
+    return old_item; // Return old item
 }
 
-
-// Remove the last returned element
+// Remove last returned element from list
 extern void *ll_remove(ll_iterator_t iter) {
     assert(iter);
-    ll_iterator *iter_struct = (ll_iterator *)iter;
+    ll_iterator *it = (ll_iterator *)iter;
 
-    if (!iter_struct->last_returned) {
-        return NULL;  // Prevents removing without calling `next()`
+    // Ensure `next()` was called before removing
+    if (!it->last_returned) {
+        return NULL;
     }
 
-    ll_node_t *node = iter_struct->last_returned;
-    void *item = node->item;
+    ll_node_t *node = it->last_returned;
+    void *item = node->item; // Store item to be returned
 
-    // Move iterator forward if possible
-    if (iter_struct->current == node) {
-        iter_struct->current = (node->next != NULL) ? node->next : node->prev;
+    // Move iterator to a valid position before removing node
+    if (it->current == node) {
+        it->current = node->next ? node->next : node->prev;
     }
 
-    // Update list pointers
+    // Update linked list pointers
     if (node->prev) {
         node->prev->next = node->next;
     } else {
-        iter_struct->list->head = node->next;  // Update head if first node is removed
+        it->list->head = node->next;
     }
 
     if (node->next) {
         node->next->prev = node->prev;
     } else {
-        iter_struct->list->tail = node->prev;  // Update tail if last node is removed
+        it->list->tail = node->prev;
     }
 
-    // If list is empty, reset iterator
-    if (iter_struct->list->head == NULL) {
-        iter_struct->current = NULL;
-    }
+    free(node); // Free memory of the removed node
+    it->last_returned = NULL; // Reset `last_returned`
 
-    iter_struct->last_returned = NULL;  // Reset last_returned
-    free(node);
-
-    return item;
+    return item; // Return removed item
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
